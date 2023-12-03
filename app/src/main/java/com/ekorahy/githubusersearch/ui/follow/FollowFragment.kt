@@ -53,6 +53,7 @@ class FollowFragment : Fragment() {
         }
     }
 
+
     private fun setUserData(items: List<ItemsItem>?) {
         val adapter = UserAdapter()
         adapter.submitList(items)

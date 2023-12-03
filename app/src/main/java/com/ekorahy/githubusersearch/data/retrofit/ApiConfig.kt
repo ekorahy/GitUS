@@ -16,7 +16,7 @@ class ApiConfig {
                     val requestHeaders = req.newBuilder()
                         .addHeader(
                             "Authorization",
-                            "token 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"
+                            "token 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"
                         )
                         .build()
                     chain.proceed(requestHeaders)

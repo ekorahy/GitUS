@@ -1,6 +1,5 @@
 package com.ekorahy.githubusersearch.ui.detail
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -21,13 +20,10 @@ class DetailUserViewModel : ViewModel() {
     private val _username = MutableLiveData<String>()
     val username: LiveData<String> = _username
 
-    companion object {
-        private const val TAG = "DetailUserViewModel"
-        private const val USERNAME = ""
-    }
+    private val toastMessageObserver: MutableLiveData<String?> = MutableLiveData<String?>()
 
     init {
-        detailUser(USERNAME)
+        detailUser(_username.value.toString())
     }
 
     fun detailUser(username: String) {
@@ -43,14 +39,18 @@ class DetailUserViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     _detailUser.value = response.body()
                 } else {
-                    Log.e(TAG, "onFailure: ${response.message()}")
+                    toastMessageObserver.setValue("Data failed to Load " + response.message())
                 }
             }
 
             override fun onFailure(call: Call<DetailUserResponse>, t: Throwable) {
                 _isLoading.value = false
-                Log.e(TAG, "onFailure: ${t.message}")
+                toastMessageObserver.value = "Data failed to Load ${t.message}"
             }
         })
+    }
+
+    fun getToastObserver(): LiveData<String?> {
+        return toastMessageObserver
     }
 }

@@ -48,7 +48,7 @@ class FollowViewModel : ViewModel() {
 
     companion object {
         private const val TAG = "FragmentFollow"
-        private const val USERNAME = "eko"
+        private const val USERNAME = ""
         private const val FOLLOWER = true
     }
 }

@@ -1,9 +1,13 @@
 package com.ekorahy.githubusersearch.ui.detail
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
@@ -13,6 +17,7 @@ import com.ekorahy.githubusersearch.R
 import com.ekorahy.githubusersearch.adapter.SectionPagerAdapter
 import com.ekorahy.githubusersearch.data.response.DetailUserResponse
 import com.ekorahy.githubusersearch.databinding.ActivityDetailUserBinding
+import com.ekorahy.githubusersearch.ui.main.MainActivity
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -42,6 +47,14 @@ class DetailUserActivity : AppCompatActivity() {
             getUsername(username)
         }
 
+        detailUserViewModel.getToastObserver().observe(this) { message ->
+            Toast.makeText(
+                this,
+                message,
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+
         val sectionPagerAdapter = SectionPagerAdapter(this)
         sectionPagerAdapter.username = intent.getStringExtra("username").toString()
 
@@ -55,6 +68,13 @@ class DetailUserActivity : AppCompatActivity() {
 
         val username = intent.getStringExtra("username")
         detailUserViewModel.detailUser("$username")
+
+        supportActionBar?.apply {
+            title = username
+            setDisplayHomeAsUpEnabled(true)
+            setBackgroundDrawable(ColorDrawable(getColor(R.color.primaryColor)))
+            elevation = 0f
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -79,6 +99,12 @@ class DetailUserActivity : AppCompatActivity() {
 
     private fun getUsername(username: String): String {
         return username
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val moveIntent = Intent(this@DetailUserActivity, MainActivity::class.java)
+        startActivity(moveIntent)
+        return true
     }
 
     companion object {
