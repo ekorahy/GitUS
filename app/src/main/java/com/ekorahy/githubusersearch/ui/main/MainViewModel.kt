@@ -1,16 +1,20 @@
 package com.ekorahy.githubusersearch.ui.main
 
+import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ekorahy.githubusersearch.data.response.GithubResponse
 import com.ekorahy.githubusersearch.data.response.ItemsItem
 import com.ekorahy.githubusersearch.data.retrofit.ApiConfig
+import com.ekorahy.githubusersearch.repository.FavoriteUserRepository
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainViewModel : ViewModel() {
+class MainViewModel: ViewModel() {
+
+   // private val mFavoriteUserRepository: FavoriteUserRepository = FavoriteUserRepository(application)
 
     private val _listUser = MutableLiveData<List<ItemsItem>>()
     val listUser: LiveData<List<ItemsItem>> = _listUser

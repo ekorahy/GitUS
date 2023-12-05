@@ -1,15 +1,21 @@
 package com.ekorahy.githubusersearch.ui.detail
 
+import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ekorahy.githubusersearch.data.response.DetailUserResponse
 import com.ekorahy.githubusersearch.data.retrofit.ApiConfig
+import com.ekorahy.githubusersearch.database.FavoriteUser
+import com.ekorahy.githubusersearch.repository.FavoriteUserRepository
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class DetailUserViewModel : ViewModel() {
+class DetailUserViewModel(application: Application) : ViewModel() {
+
+    private val mFavoriteUserRepository: FavoriteUserRepository =
+        FavoriteUserRepository(application)
 
     private val _detailUser = MutableLiveData<DetailUserResponse>()
     val detailUser: LiveData<DetailUserResponse> = _detailUser
@@ -48,6 +54,18 @@ class DetailUserViewModel : ViewModel() {
                 toastMessageObserver.value = "Data failed to Load ${t.message}"
             }
         })
+    }
+
+    fun insert(favoriteUser: FavoriteUser) {
+        mFavoriteUserRepository.insert(favoriteUser)
+    }
+
+    fun deleteByUsername(username: String) {
+        mFavoriteUserRepository.deleteByUsername(username)
+    }
+
+    fun getFavoriteUserByUsername(username: String): LiveData<FavoriteUser> {
+        return mFavoriteUserRepository.getFavoriteUserByUsername(username)
     }
 
     fun getToastObserver(): LiveData<String?> {

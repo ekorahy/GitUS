@@ -9,6 +9,7 @@ import com.ekorahy.githubusersearch.ui.follow.FollowFragment
 class SectionPagerAdapter(activity: AppCompatActivity) : FragmentStateAdapter(activity) {
 
     var username: String = ""
+
     override fun getItemCount(): Int {
         return 2
     }
