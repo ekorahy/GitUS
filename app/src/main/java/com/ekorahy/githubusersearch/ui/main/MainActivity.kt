@@ -1,14 +1,17 @@
 package com.ekorahy.githubusersearch.ui.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.ekorahy.githubusersearch.R
 import com.ekorahy.githubusersearch.adapter.UserAdapter
 import com.ekorahy.githubusersearch.data.response.ItemsItem
 import com.ekorahy.githubusersearch.databinding.ActivityMainBinding
+import com.ekorahy.githubusersearch.ui.favorite.FavoriteUserActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -64,6 +67,17 @@ class MainActivity : AppCompatActivity() {
                     }
                     true
                 }
+        }
+
+        binding.topAppBar.setOnMenuItemClickListener{ menuItem ->
+            when(menuItem.itemId) {
+                R.id.menu1 -> {
+                    val intent = Intent(this, FavoriteUserActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+                else -> false
+            }
         }
     }
 
