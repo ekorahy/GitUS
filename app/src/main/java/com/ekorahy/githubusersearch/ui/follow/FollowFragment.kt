@@ -67,6 +67,5 @@ class FollowFragment : Fragment() {
     companion object {
         const val ARG_POSITION = "position"
         const val ARG_USERNAME = "username"
-        const val ARG_AVATARURL = "avatar_url"
     }
 }

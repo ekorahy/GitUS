@@ -2,12 +2,14 @@ package com.ekorahy.githubusersearch.ui.detail
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
@@ -18,7 +20,11 @@ import com.ekorahy.githubusersearch.adapter.SectionPagerAdapter
 import com.ekorahy.githubusersearch.data.response.DetailUserResponse
 import com.ekorahy.githubusersearch.database.FavoriteUser
 import com.ekorahy.githubusersearch.databinding.ActivityDetailUserBinding
+import com.ekorahy.githubusersearch.datastore.SettingPreferences
+import com.ekorahy.githubusersearch.datastore.dataStore
+import com.ekorahy.githubusersearch.helper.SettingViewModelFactory
 import com.ekorahy.githubusersearch.helper.ViewModelFactory
+import com.ekorahy.githubusersearch.ui.lightanddark.LightAndDarkViewModel
 import com.ekorahy.githubusersearch.ui.main.MainActivity
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -79,8 +85,48 @@ class DetailUserActivity : AppCompatActivity() {
         supportActionBar?.apply {
             title = username
             setDisplayHomeAsUpEnabled(true)
-            setBackgroundDrawable(ColorDrawable(getColor(R.color.primaryColor)))
+            setBackgroundDrawable(ColorDrawable(getColor(R.color.teal_400)))
             elevation = 0f
+        }
+
+        val pref = SettingPreferences.getInstance(application.dataStore)
+        val lightAndDarkViewModel = ViewModelProvider(
+            this,
+            SettingViewModelFactory(pref)
+        )[LightAndDarkViewModel::class.java]
+        lightAndDarkViewModel.getThemeSettings().observe(this) { isDarkModeActive: Boolean ->
+            if (isDarkModeActive) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                binding.apply {
+                    tvName.setTextColor(getColor(R.color.white))
+                    tvFollowing.setTextColor(getColor(R.color.white))
+                    tvFollowingCount.setTextColor(getColor(R.color.white))
+                    tvRepo.setTextColor(getColor(R.color.white))
+                    tvRepoCount.setTextColor(getColor(R.color.white))
+                    tvFollowers.setTextColor(getColor(R.color.white))
+                    tvFollowerCount.setTextColor(getColor(R.color.white))
+                    tabs.setBackgroundColor(getColor(R.color.black))
+                    tabs.setTabTextColors(getColor(R.color.grey_400), getColor(R.color.teal_400))
+                    viewPager.setBackgroundColor(getColor(R.color.black))
+                    fabAdd.setBackgroundColor(getColor(R.color.black))
+                    fabAdd.backgroundTintList = ColorStateList.valueOf(getColor(R.color.black))
+                }
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                binding.apply {
+                    tvName.setTextColor(getColor(R.color.black))
+                    tvFollowing.setTextColor(getColor(R.color.black))
+                    tvFollowingCount.setTextColor(getColor(R.color.black))
+                    tvRepo.setTextColor(getColor(R.color.black))
+                    tvRepoCount.setTextColor(getColor(R.color.black))
+                    tvFollowers.setTextColor(getColor(R.color.black))
+                    tvFollowerCount.setTextColor(getColor(R.color.black))
+                    tabs.setBackgroundColor(getColor(R.color.white))
+                    tabs.setTabTextColors(getColor(R.color.grey_400), getColor(R.color.teal_400))
+                    viewPager.setBackgroundColor(getColor(R.color.white))
+                    fabAdd.backgroundTintList = ColorStateList.valueOf(getColor(R.color.white))
+                }
+            }
         }
 
         detailUserViewModel.getFavoriteUserByUsername(username.toString()).observe(this) {

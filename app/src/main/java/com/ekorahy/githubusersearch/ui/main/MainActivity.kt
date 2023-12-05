@@ -5,13 +5,19 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ekorahy.githubusersearch.R
 import com.ekorahy.githubusersearch.adapter.UserAdapter
 import com.ekorahy.githubusersearch.data.response.ItemsItem
 import com.ekorahy.githubusersearch.databinding.ActivityMainBinding
+import com.ekorahy.githubusersearch.datastore.SettingPreferences
+import com.ekorahy.githubusersearch.datastore.dataStore
+import com.ekorahy.githubusersearch.helper.SettingViewModelFactory
 import com.ekorahy.githubusersearch.ui.favorite.FavoriteUserActivity
+import com.ekorahy.githubusersearch.ui.lightanddark.LightAndDarkActivity
+import com.ekorahy.githubusersearch.ui.lightanddark.LightAndDarkViewModel
 
 class MainActivity : AppCompatActivity() {
 
@@ -49,6 +55,30 @@ class MainActivity : AppCompatActivity() {
             ).show()
         }
 
+        val pref = SettingPreferences.getInstance(application.dataStore)
+        val lightAndDarkViewModel = ViewModelProvider(
+            this,
+            SettingViewModelFactory(pref)
+        )[LightAndDarkViewModel::class.java]
+        lightAndDarkViewModel.getThemeSettings().observe(this) { isDarkModeActive: Boolean ->
+            if (isDarkModeActive) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                binding.apply {
+                    appBarLayout.setBackgroundColor(getColor(R.color.black))
+                    topAppBar.setLogo(R.drawable.logo_appbar_dark)
+                    activityMain.setBackgroundColor(getColor(R.color.black))
+                }
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                binding.apply {
+                    appBarLayout.setBackgroundColor(getColor(R.color.white))
+                    topAppBar.setLogo(R.drawable.logo_appbar)
+                    activityMain.setBackgroundColor(getColor(R.color.white))
+
+                }
+            }
+        }
+
         with(binding) {
             searchView.setupWithSearchBar(searchBar)
             searchView
@@ -69,13 +99,21 @@ class MainActivity : AppCompatActivity() {
                 }
         }
 
-        binding.topAppBar.setOnMenuItemClickListener{ menuItem ->
-            when(menuItem.itemId) {
+        binding.topAppBar.setOnMenuItemClickListener { menuItem ->
+            val intent: Intent
+            when (menuItem.itemId) {
                 R.id.menu1 -> {
-                    val intent = Intent(this, FavoriteUserActivity::class.java)
+                    intent = Intent(this, FavoriteUserActivity::class.java)
                     startActivity(intent)
                     true
                 }
+
+                R.id.menu2 -> {
+                    intent = Intent(this, LightAndDarkActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+
                 else -> false
             }
         }

@@ -13,4 +13,5 @@
     <string name="menu_2">Light &amp; Dark Mode</string>
     <string name="img_avatar">Avatar User Image</string>
     <string name="tab_layout">Tab Layout</string>
+    <string name="dark_mode">Dark Mode</string>
 </resources>

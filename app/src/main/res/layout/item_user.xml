@@ -19,13 +19,14 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="8dp"
+            android:contentDescription="@string/img_avatar"
+            android:importantForAccessibility="no"
             android:scaleType="centerCrop"
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintStart_toStartOf="parent"
             card_view:layout_constraintTop_toTopOf="parent"
-            tools:src="@tools:sample/avatars"
-            android:contentDescription="@string/img_avatar"
-            android:importantForAccessibility="no" />
+            tools:ignore="ImageContrastCheck"
+            tools:src="@tools:sample/avatars" />
 
         <TextView
             android:id="@+id/tv_username"

@@ -1,4 +1,7 @@
 <resources>
 
-    <style name="Base.Theme.GithubUserSearch" parent="Theme.Material3.DayNight.NoActionBar"></style>
+    <style name="Base.Theme.GithubUserSearch" parent="Theme.Material3.DayNight">
+        <item name="colorPrimary">@color/teal_400</item>
+        <item name="background">@color/black</item>
+    </style>
 </resources>

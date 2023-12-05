@@ -6,8 +6,9 @@ import androidx.lifecycle.ViewModel
 import com.ekorahy.githubusersearch.database.FavoriteUser
 import com.ekorahy.githubusersearch.repository.FavoriteUserRepository
 
-class FavoriteUserViewModel(application: Application): ViewModel() {
-    private val mFavoriteUserRepository: FavoriteUserRepository = FavoriteUserRepository(application)
+class FavoriteUserViewModel(application: Application) : ViewModel() {
+    private val mFavoriteUserRepository: FavoriteUserRepository =
+        FavoriteUserRepository(application)
 
     fun getAllNotes(): LiveData<List<FavoriteUser>> = mFavoriteUserRepository.getAllFavoriteUser()
 }
