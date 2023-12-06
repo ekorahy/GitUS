@@ -81,6 +81,7 @@ class DetailUserActivity : AppCompatActivity() {
         detailUserViewModel.detailUser("$username")
 
         val avatarUrl = intent.getStringExtra("avatarUrl").toString()
+        val url = intent.getStringExtra("htmlUrl").toString()
 
         supportActionBar?.apply {
             title = username
@@ -142,10 +143,12 @@ class DetailUserActivity : AppCompatActivity() {
         binding.fabAdd.setOnClickListener {
             val username = username
             val avatarUrl = avatarUrl
+            val url = url
             val favoriteUser = FavoriteUser()
             favoriteUser.let { favoriteUser ->
                 favoriteUser.username = username
                 favoriteUser.avatarUrl = avatarUrl
+                favoriteUser.htmlUrl = url
             }
             isFavorite = if (isFavorite) {
                 detailUserViewModel.deleteByUsername(username.toString())
@@ -156,6 +159,16 @@ class DetailUserActivity : AppCompatActivity() {
                 binding.fabAdd.setImageResource(R.drawable.ic_favorite_full)
                 true
             }
+        }
+
+        binding.fabShare.setOnClickListener {
+            val share = Intent.createChooser(Intent().apply {
+                action = Intent.ACTION_SEND
+                type = "text/plain"
+                putExtra(Intent.EXTRA_TEXT, url)
+                putExtra(Intent.EXTRA_TITLE, username)
+            }, "Share github user url : $username")
+            startActivity(share)
         }
     }
 

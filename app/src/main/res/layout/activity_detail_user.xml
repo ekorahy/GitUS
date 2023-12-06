@@ -221,6 +221,26 @@
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_share"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="16dp"
+        android:foregroundGravity="bottom"
+        app:backgroundTint="@color/teal_400"
+        app:fabSize="normal"
+        app:layout_constraintBottom_toTopOf="@+id/fab_add"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:rippleColor="@color/grey_200"
+        app:srcCompat="@drawable/ic_share_light"
+        app:tint="@color/white"
+        tools:ignore="ContentDescription,MissingConstraints,SpeakableTextPresentCheck" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

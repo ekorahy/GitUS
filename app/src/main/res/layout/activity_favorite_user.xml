@@ -32,6 +32,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
+            android:visibility="visible"
             android:overScrollMode="never"
             android:scrollbarSize="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -39,6 +40,35 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="parent"
             app:layout_constraintVertical_bias="1.0" />
+
+        <LinearLayout
+            android:id="@+id/emptyData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:layout_width="170dp"
+                android:layout_height="130dp"
+                android:src="@drawable/ic_empty_data"
+                android:contentDescription="@string/empty_data_illustration" />
+
+            <TextView
+                android:id="@+id/tv_emptyData"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/quicksand_light"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:text="@string/empty_data" />
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

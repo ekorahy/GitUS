@@ -5,6 +5,7 @@ import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -53,24 +54,35 @@ class FavoriteUserActivity : AppCompatActivity() {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                 binding.apply {
                     activityFavoriteUser.setBackgroundColor(getColor(R.color.black))
+                    tvEmptyData.setTextColor(getColor(R.color.white))
                 }
             } else {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                 binding.apply {
                     activityFavoriteUser.setBackgroundColor(getColor(R.color.white))
+                    tvEmptyData.setTextColor(getColor(R.color.black))
                 }
             }
         }
 
         val favoriteUserViewModel = obtainViewModel(this@FavoriteUserActivity)
         favoriteUserViewModel.getAllNotes().observe(this) { favoriteList ->
-            val items = arrayListOf<ItemsItem>()
-            favoriteList.map {
-                val item =
-                    ItemsItem(login = it.username.toString(), avatarUrl = it.avatarUrl.toString())
-                items.add(item)
+            if (favoriteList.isNullOrEmpty()) {
+                binding.rvFavorite.visibility = View.INVISIBLE
+                binding.emptyData.visibility = View.VISIBLE
+            } else {
+                val items = arrayListOf<ItemsItem>()
+                favoriteList.map {
+                    val item =
+                        ItemsItem(
+                            login = it.username.toString(),
+                            avatarUrl = it.avatarUrl.toString(),
+                            htmlUrl = it.htmlUrl.toString()
+                        )
+                    items.add(item)
+                }
+                adapter.submitList(items)
             }
-            adapter.submitList(items)
         }
 
     }

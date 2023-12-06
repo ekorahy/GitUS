@@ -29,7 +29,7 @@ class DetailUserViewModel(application: Application) : ViewModel() {
     private val toastMessageObserver: MutableLiveData<String?> = MutableLiveData<String?>()
 
     init {
-        detailUser(_username.value.toString())
+        detailUser(username.toString())
     }
 
     fun detailUser(username: String) {
@@ -44,8 +44,6 @@ class DetailUserViewModel(application: Application) : ViewModel() {
                 _isLoading.value = false
                 if (response.isSuccessful) {
                     _detailUser.value = response.body()
-                } else {
-                    toastMessageObserver.setValue("Data failed to Load " + response.message())
                 }
             }
 

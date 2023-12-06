@@ -27,6 +27,7 @@ class UserAdapter : ListAdapter<ItemsItem, UserAdapter.MyViewHolder>(DIFF_CALLBA
             val intentDetail = Intent(holder.itemView.context, DetailUserActivity::class.java)
             intentDetail.putExtra("username", user.login)
             intentDetail.putExtra("avatarUrl", user.avatarUrl)
+            intentDetail.putExtra("htmlUrl", user.htmlUrl)
             holder.itemView.context.startActivity(intentDetail)
         }
     }

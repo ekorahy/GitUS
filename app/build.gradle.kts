@@ -70,6 +70,7 @@ dependencies {
     //noinspection GradleDependency
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
     //noinspection GradleDependency
+    implementation("androidx.core:core-splashscreen:1.0.0")
     ksp("androidx.room:room-compiler:2.5.2")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

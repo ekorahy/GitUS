@@ -9,6 +9,16 @@ import com.ekorahy.githubusersearch.ui.favorite.FavoriteUserViewModel
 class ViewModelFactory private constructor(private val mApplication: Application) :
     ViewModelProvider.NewInstanceFactory() {
 
+    @Suppress("UNCHECKED_CAST")
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(FavoriteUserViewModel::class.java)) {
+            return FavoriteUserViewModel(mApplication) as T
+        } else if (modelClass.isAssignableFrom(DetailUserViewModel::class.java)) {
+            return DetailUserViewModel(mApplication) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
+    }
+
     companion object {
         @Volatile
         private var INSTANCE: ViewModelFactory? = null
@@ -22,15 +32,5 @@ class ViewModelFactory private constructor(private val mApplication: Application
             }
             return INSTANCE as ViewModelFactory
         }
-    }
-
-    @Suppress("UNCHECKED_CAST")
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(FavoriteUserViewModel::class.java)) {
-            return FavoriteUserViewModel(mApplication) as T
-        } else if (modelClass.isAssignableFrom(DetailUserViewModel::class.java)) {
-            return DetailUserViewModel(mApplication) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
     }
 }
